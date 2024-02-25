@@ -13,12 +13,6 @@ import (
 
 )
 
-var (
-	Version      string
-	GitCommit    string
-	GitTreeState string
-	BuildDate    string
-)
 
 type BeanOptions struct {
 	Arguments   []string
