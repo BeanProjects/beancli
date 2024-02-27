@@ -1,27 +1,36 @@
 package main
 
 import (
-	"beandev.io/beancli/pkg/cmd"
-	_ "beandev.io/beancli/pkg/cmd"
 	"fmt"
 	"io"
-	_ "k8s.io/component-base/cli"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 
+
+	_ "k8s.io/cli-runtime/pkg/genericclioptions"
+	_ "k8s.io/component-base/cli"
+	_ "k8s.io/kubectl/pkg/cmd/util"
+	"beandev.io/beancli/pkg/cmd"
+
 	// Import to initialize client auth plugins.
+
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 )
 
 func main() {
-	rootCommand := cmd.NewDefaultBeanCommand()
-	print("v0.0.2")
-	println(rootCommand.Long)
-	download_url("https://raw.githubusercontent.com/BeanProjects/beancli/master/scripts/echo.sh")
-	chmod("echo.sh")
+
+	cmd := cmd.NewDefaultBeanCommand()
+	if err := cmd.Execute(); err != nil {
+		os.Exit(1)
+	}
+
+	// print("v0.0.2")
+	// println(cmd.Long)
+	// download_url("https://raw.githubusercontent.com/BeanProjects/beancli/master/scripts/echo.sh")
+	// chmod("echo.sh")
 }
 
 func download_url(fullURLFile string) {
